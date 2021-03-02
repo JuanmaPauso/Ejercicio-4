@@ -5,17 +5,21 @@ const favs = require("./cmds_favs.js");
 const readline = require('readline');
 const net = require('net');
 
-const server = net.createServer((socket) =>{
+console.log("Servidor activo");
 
+const server = net.createServer((socket) =>{
+//he modificado input y output para leer las ordenes a traves del socket
   const rl = readline.createInterface({
     input:socket,
     output:socket,
     prompt: "> "
   });
-
+//cierra el cliente
   socket.on('end',()=>{rl.close();});
   socket.on('error',()=>{rl.close();});
 
+  socket.write("Cliente activado\n");
+//Modificacación de rl.log para poder trabajar con socket
   rl.log = (msg) => {socket.write(`${msg}\n`);};
 
   rl.prompt();
@@ -60,5 +64,6 @@ const server = net.createServer((socket) =>{
   });
 
 });
+//Escuchando peticiones en el puerto 8080
 server.listen(8080);
 
