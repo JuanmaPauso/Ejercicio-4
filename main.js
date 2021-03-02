@@ -10,7 +10,7 @@ const server = net.createServer((socket) =>{
   const rl = readline.createInterface({
     input:socket,
     output:socket,
-    prompt: ">"
+    prompt: "> "
   });
 
   socket.on('end',()=>{rl.close();});
